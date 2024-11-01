@@ -1,0 +1,4 @@
+/* pages/template/user/home/home.wxss */
+.image-bg {
+  width: 100%;
+}
