@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/about/about",
+    "pages/message/message",
+    "pages/stuff/stuff",
+    "pages/about/studentCode/studentCode"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom",
+    "navigationBarRightButton": {
+      "hide": true
+    }
+  },
+  "tabBar": {
+    "color": "black",
+    "selectedColor": "#2DE6AF",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/stuff/stuff",
+        "iconPath": "static/tabber/component.png",
+        "selectedIconPath": "static/tabber/component_cur.png",
+        "text": "逛一逛"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/tabber/chat.png",
+        "selectedIconPath": "static/tabber/chat_cur.png",
+        "text": "私聊"
+      },
+      {
+        "pagePath": "pages/about/about",
+        "iconPath": "static/tabber/about.png",
+        "selectedIconPath": "static/tabber/about_cur.png",
+        "text": "个人"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,33 @@
+.layout.data-v-13a78ac6 {
+  margin: 20rpx;
+}
+.user-profile.data-v-13a78ac6 {
+  display: flex;
+  padding: 50rpx;
+}
+.user-profile .avatar.data-v-13a78ac6 {
+  width: 140rpx ;
+  height: 140rpx;
+  border-radius: 50%;
+}
+.user-profile .user-detail.data-v-13a78ac6 {
+  margin: 30rpx;
+}
+.student-code button.data-v-13a78ac6 {
+  background: linear-gradient(90deg, #5c74ff, #2de6af);
+  color: white;
+  /* 设置文字颜色为白色 */
+  border: none;
+  /* 去掉边框 */
+  padding: 12rpx 24rpx;
+  /* 设置内边距 */
+  border-radius: 8rpx;
+  /* 设置圆角 */
+  font-size: 16rpx;
+  /* 设置字体大小 */
+  cursor: pointer;
+  /* 鼠标悬停时显示为可点击 */
+  transition: background 0.3s;
+  /* 添加过渡效果 */
+  font-size: 25rpx;
+}

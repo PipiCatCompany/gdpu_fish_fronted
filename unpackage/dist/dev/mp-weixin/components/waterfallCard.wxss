@@ -1,0 +1,30 @@
+.info.data-v-4d2310b4 {
+  padding: 10rpx;
+}
+.layout.data-v-4d2310b4 {
+  margin: 10rpx;
+  box-sizing: border-box;
+  height: 568rpx;
+  width: 326rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 10rpx 10rpx 10rpx #eee;
+}
+.layout .stuff-pic.data-v-4d2310b4 {
+  width: 326rpx;
+  height: 320rpx;
+}
+.stuff-info .stuff-price.data-v-4d2310b4 {
+  font-weight: 700;
+}
+.user-info .user-name.data-v-4d2310b4 {
+  color: #838383;
+  margin-left: 17rpx;
+  margin-top: 8rpx;
+  font-size: 23rpx;
+}
+.user-info .user-avatar.data-v-4d2310b4 {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 25rpx;
+}
