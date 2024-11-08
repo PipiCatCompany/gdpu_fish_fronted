@@ -5,7 +5,7 @@
 			
 			<view class="user-detail">
 				<view class="user-name">
-					xxx
+					xxxx
 				</view>
 				<view class="user-tag">
 					已认证
