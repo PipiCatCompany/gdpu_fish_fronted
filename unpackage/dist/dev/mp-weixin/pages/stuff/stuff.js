@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const api_stuff = require("../../api/stuff.js");
 if (!Array) {
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
   _easycom_uni_easyinput2();
@@ -16,6 +17,27 @@ const _sfc_main = {
     const onClick = () => {
       console.log("qifei");
     };
+    let stuffList = common_vendor.reactive([]);
+    {
+      console.log("start");
+      api_stuff.GetStuffPagination(1, 10).then((res) => {
+        console.log(res);
+        for (let i = 0; i < res.data.length; i += 2) {
+          let pair = [];
+          pair.push(res.data[i]);
+          if (i + 1 < res.data.length) {
+            pair.push(res.data[i + 1]);
+          }
+          console.log(pair[0]);
+          stuffList.push(pair);
+        }
+      });
+    }
+    const gotoDetail = () => {
+      common_vendor.index.navigateTo({
+        url: "/pages/stuff/stuffDetail/stuffDetail"
+      });
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.o(onClick),
@@ -25,12 +47,22 @@ const _sfc_main = {
           placeholder: "搜索闲置物品...",
           modelValue: common_vendor.unref(query)
         }),
-        d: common_vendor.f(20, (i, k0, i0) => {
-          return {
+        d: common_vendor.f(common_vendor.unref(stuffList), (pair, k0, i0) => {
+          return common_vendor.e({
             a: "a4cab53f-1-" + i0,
-            b: "a4cab53f-2-" + i0
-          };
-        })
+            b: common_vendor.p({
+              data: pair[0]
+            }),
+            c: pair[1]
+          }, pair[1] ? {
+            d: common_vendor.o(gotoDetail),
+            e: "a4cab53f-2-" + i0,
+            f: common_vendor.p({
+              data: pair[1]
+            })
+          } : {});
+        }),
+        e: common_vendor.o(gotoDetail)
       };
     };
   }

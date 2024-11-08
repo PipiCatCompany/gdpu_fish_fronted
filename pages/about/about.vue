@@ -6,7 +6,7 @@
 			<view class="user-detail">
 				<view class="user-name">
 					xxxx
-				</view>
+			</view>
 				<view class="user-tag">
 					已认证
 				</view>
@@ -20,6 +20,20 @@
 </template>
 
 <script setup>
+import { onMounted, reactive } from 'vue';
+import { GetUser } from '@/api/user';
+
+let user = reactive({
+	nickname: "default",
+	isStudentCode: false 
+})
+
+onMounted: {	
+	let user_storage = GetUser()
+	user.nickname = user_storage.Nickname
+	console.log(user)
+}
+
 const gotoStudentCode = () => {
 	// 去绑定学号	
 	uni.navigateTo({

@@ -3,7 +3,8 @@
     "pages/about/about",
     "pages/message/message",
     "pages/stuff/stuff",
-    "pages/about/studentCode/studentCode"
+    "pages/about/studentCode/studentCode",
+    "pages/stuff/stuffDetail/stuffDetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",

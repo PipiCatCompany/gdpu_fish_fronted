@@ -21,6 +21,8 @@
 							try {
 								// 用户信息持久化本地
 								uni.setStorageSync('user', res.data.user);
+								// 持久化令牌
+								uni.setStorageSync('token', res.data.accessToken);
 							} catch (e) {
 								console.log(e)
 							}

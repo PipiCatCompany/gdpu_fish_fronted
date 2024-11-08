@@ -6,19 +6,50 @@
 			</view>
 		</view>
 		
-		<view v-for="i in (20)" class="waterfall" style="display: flex;">
-			<waterfallCard></waterfallCard>
-			<waterfallCard></waterfallCard>
+		<view v-for="pair in stuffList" class="waterfall" style="display: flex;">
+			<waterfallCard @click="gotoDetail" :data="pair[0]"></waterfallCard>
+			<waterfallCard @click="gotoDetail" v-if="pair[1]" :data="pair[1]"></waterfallCard>
 		</view> 
 	</view>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+	
+import {ref,onMounted,reactive} from 'vue'
+import {GetStuffPagination} from '@/api/stuff.js'
 import waterfallCard from '@/components/waterfallCard.vue'
+
 let query = ref("")
 const onClick = () => {
 	console.log("qifei")
+}
+
+let stuffList = reactive([])
+
+
+onMounted: {
+	console.log("start")
+	GetStuffPagination(1,10)	
+		.then(res => {
+			console.log(res)
+			for(let i = 0 ; i < res.data.length; i+=2) {
+				let pair = []
+				
+				pair.push(res.data[i])
+				if(i+1 < res.data.length) {
+					pair.push(res.data[i+1])
+				}
+				
+				console.log(pair[0])
+				stuffList.push(pair)
+			}
+		})
+}
+
+const gotoDetail = () => {
+	uni.navigateTo({
+		url: "/pages/stuff/stuffDetail/stuffDetail"
+	});
 }
 </script>
 
