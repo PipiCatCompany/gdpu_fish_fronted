@@ -5,8 +5,8 @@
 			
 			<view class="user-detail">
 				<view class="user-name">
-					{{ user.nickname }}
-				</view>
+					xxxx
+			</view>
 				<view class="user-tag">
 					已认证
 				</view>
