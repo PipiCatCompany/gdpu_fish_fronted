@@ -7,6 +7,7 @@ if (!Math) {
   "./pages/message/message.js";
   "./pages/stuff/stuff.js";
   "./pages/about/studentCode/studentCode.js";
+  "./pages/stuff/stuffDetail/stuffDetail.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -23,6 +24,7 @@ const _sfc_main = {
           api_user.LoginByOpenId(openid).then((res2) => {
             try {
               common_vendor.index.setStorageSync("user", res2.data.user);
+              common_vendor.index.setStorageSync("token", res2.data.accessToken);
             } catch (e) {
               console.log(e);
             }
@@ -35,6 +37,8 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
+require("./vue-devtools/hook.js");
+require("./vue-devtools/backend.js");
 function createApp() {
   const app = common_vendor.createSSRApp(_sfc_main);
   return {

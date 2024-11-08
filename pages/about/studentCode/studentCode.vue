@@ -18,26 +18,66 @@
 					<view class="form-name">
 						学号
 					</view>
-					<uni-easyinput class="form-input" placeholder="请输入你的学号..."/>
+					<uni-easyinput v-model="pkg.code" class="form-input" placeholder="请输入你的学号..."/>
 				</view>
 				
 				<view class="student-code" style="margin-top: 56rpx;">
 					<view class="form-name">
 						确认学号
 					</view>
-					<uni-easyinput class="form-input" placeholder="请再输入你的学号..."/>
+					<uni-easyinput v-model="pkg.codeConfirm" class="form-input" placeholder="请再输入你的学号..."/>
 				</view>
 				
-
-				<button class="student-code-btn">确认绑定</button>
-
+				<view v-if="pkg.showErr" class="err-msg" style="color: #ef508a">
+					{{ pkg.ErrMsg }}
+				</view>
+				<button class="student-code-btn" @click="updateStudentCode">确认绑定</button>
 		</view>
 		
 	</view>
 </template>
 
 <script setup>
-// import { v-model } from 'vue'
+import { reactive } from 'vue';
+import { updateUserStudentCode , GetUser , GetToken} from '@/api/user.js'
+let pkg = reactive({
+	code: "", 
+	codeConfirm: "",
+	showErr: false,
+	ErrMsg: ""
+})
+
+const updateStudentCode = () => {
+	// 校验
+	if(pkg.code != pkg.codeConfirm) {
+		pkg.showErr = true
+		pkg.ErrMsg = "两次输入学号不匹配！"
+	}else if (pkg.code === "" && pkg.codeConfirm === "") {
+		pkg.showErr = true
+		pkg.ErrMsg = "输入为空！"
+	}
+	//TODO 还需要正则校验...
+	 
+	let user = GetUser();
+	let token = GetToken();
+	updateUserStudentCode({
+	  "studentCode": pkg.code,
+	  "userId": user.UserId,
+	  "token": token
+	}).then(res => {
+		uni.showToast({
+			title: '绑定成功',
+			icon: 'success',
+			duration: 1000,
+			success: () => {
+				  setTimeout(() => {
+					goback()
+				  }, 1000); // 与duration一致，确保提示后再跳转
+				}
+		})  
+		
+	})
+}
 
 const goback = () => {
 	uni.navigateBack()

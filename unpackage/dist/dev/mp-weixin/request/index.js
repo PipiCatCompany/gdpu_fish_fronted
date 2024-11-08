@@ -6,10 +6,10 @@ const request = (params) => {
   let url = params.url;
   let method = params.method || "get";
   let data = params.data || {};
+  params.token || "none";
   let header = {
-    // 'Blade-Auth': uni.getStorageSync('token') || '',
     "Content-Type": "application/json;charset=UTF-8",
-    // 'Authorization': 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
+    "Authorization": common_vendor.index.getStorageSync("token"),
     // 'Tenant-Id': uni.getStorageSync('tenantId') || 'xxx', // avue配置相关
     ...params.header
   };

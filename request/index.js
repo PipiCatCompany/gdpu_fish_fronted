@@ -8,10 +8,10 @@ export default (params) => {
 	let url = params.url;
 	let method = params.method || "get";
 	let data = params.data || {};
+	let token = params.token || "none";
 	let header = {
-		// 'Blade-Auth': uni.getStorageSync('token') || '',
 		'Content-Type': 'application/json;charset=UTF-8',
-		// 'Authorization': 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
+		'Authorization': uni.getStorageSync('token'),
 		// 'Tenant-Id': uni.getStorageSync('tenantId') || 'xxx', // avue配置相关
 		...params.header
 	}

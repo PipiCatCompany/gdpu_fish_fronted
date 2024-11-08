@@ -1,19 +1,12 @@
 <template>
 	<view class="layout">
-		<image mode="widthFix" class="stuff-pic" src="../static/logo.png" alt="" />
-		
+		<image  class="stuff-pic" :src="item.data.img" alt="" />
 		<view class="stuff-info info">
 			<view class="stuff-name">
-				这是商品简介...
+				{{ item.data.info }}
 			</view>
-			<view class="stuff-price" style="color: #4A63FF;">
-				$600
-			</view>
-			<view class="stuff-seller" style="display: flex;">
-				<img src="" alt="" />
-				<view class="">
-					xxxx
-				</view>
+			<view class="stuff-price">
+				{{ item.data.price }}
 			</view>
 		</view>
 		
@@ -28,7 +21,10 @@
 </template>
 
 <script setup>
-
+import {defineProps} from 'vue'
+let item = defineProps({
+	data: Object
+})
 </script>
 
 <style lang="less" scoped>
@@ -44,17 +40,47 @@
 	width: 326rpx;
 	background-color: white;
 	border-radius: 20rpx;
-	box-shadow: 10rpx 10rpx 10rpx #eee;
+	// box-shadow: 10rpx 10rpx 10rpx #eee;
+	box-shadow: 0px -4px 16px  rgba(119, 154, 241, 0.04), 0px 8px 16px 2px rgba(119, 154, 241, 0.2);
 	
 	.stuff-pic {
 		width: 326rpx;
 		height: 320rpx;
+		border-radius: 25rpx;
 	}
 }
 
 .stuff-info {
+	.stuff-name {
+		left: 16px;
+		top: 176px;
+		width: 116px;
+		height: 30px;
+		opacity: 1;
+		/** 文本1 */
+		font-size: 13px;
+		font-weight: 400;
+		letter-spacing: 0px;
+		line-height: 15.23px;
+		color: rgba(64, 67, 78, 1);
+		text-align: left;
+		vertical-align: top;
+	}
+	
 	.stuff-price {
+		left: 16px;
+		top: 216px;
+		width: 75px;
+		height: 15px;
+		opacity: 1;
+		/** 文本1 */
+		font-size: 13px;
 		font-weight: 700;
+		letter-spacing: 0px;
+		line-height: 15.23px;
+		color: rgba(74, 99, 255, 1);
+		text-align: left;
+		vertical-align: top;
 	}
 }
 
