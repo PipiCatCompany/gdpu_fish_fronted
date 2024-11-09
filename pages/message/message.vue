@@ -1,6 +1,6 @@
 <template>
 	<view>
-<uni-easyinput type="password" v-model="password" placeholder="请输入密码"></uni-easyinput>
+		<view>私信</view>
 	</view>
 </template>
 
