@@ -7,8 +7,15 @@
 		</view>
 		
 		<view v-for="pair in stuffList" class="waterfall" style="display: flex;">
-			<waterfallCard @click="gotoDetail" :data="pair[0]"></waterfallCard>
-			<waterfallCard @click="gotoDetail" v-if="pair[1]" :data="pair[1]"></waterfallCard>
+			
+			<!-- uniapp小程序编译，组件点击事件不会触发 -->
+			<view class="" @click="gotoDetail(pair[0])">
+				<waterfallCard :data="pair[0]"></waterfallCard>
+			</view>
+
+			<view class="" @click="gotoDetail(pair[1])">
+				<waterfallCard v-if="pair[1]" :data="pair[1]"></waterfallCard>
+			</view>
 		</view> 
 	</view>
 </template>
@@ -18,37 +25,51 @@
 import {ref,onMounted,reactive} from 'vue'
 import {GetStuffPagination} from '@/api/stuff.js'
 import waterfallCard from '@/components/waterfallCard.vue'
+import { onReachBottom } from '@dcloudio/uni-app'  
 
 let query = ref("")
+let cur_page = ref(1)
+
 const onClick = () => {
 	console.log("qifei")
 }
 
 let stuffList = reactive([])
 
+// 把分页结果入队
+const add2StuffList = (res) => {
+	for(let i = 0 ; i < res.data.length; i+=2) {
+		let pair = []
+		
+		pair.push(res.data[i])
+		if(i+1 < res.data.length) {
+			pair.push(res.data[i+1])
+		}
+		
+		stuffList.push(pair)
+	}
+}
+onReachBottom(() => {
+	cur_page.value += 1 
+	GetStuffPagination(cur_page.value,4)
+		.then(res => { add2StuffList(res)})
+	
+	console.log("触发分页，获取数据")
+})
 
 onMounted: {
 	console.log("start")
-	GetStuffPagination(1,10)	
-		.then(res => {
-			console.log(res)
-			for(let i = 0 ; i < res.data.length; i+=2) {
-				let pair = []
-				
-				pair.push(res.data[i])
-				if(i+1 < res.data.length) {
-					pair.push(res.data[i+1])
-				}
-				
-				console.log(pair[0])
-				stuffList.push(pair)
-			}
-		})
+	GetStuffPagination(cur_page.value,6)	
+		.then(res => { add2StuffList(res)})
 }
 
-const gotoDetail = () => {
+const gotoDetail = (pair) => {
+	// console.log(JSON.stringify(pair))
+
 	uni.navigateTo({
-		url: "/pages/stuff/stuffDetail/stuffDetail"
+		url: "/pages/stuff/stuffDetail/stuffDetail" + "?stuff=" + 	encodeURIComponent(JSON.stringify(pair)),	
+		animationType: 'slide-in-right',
+		animationDuration: 2000
 	});
 }
 </script>

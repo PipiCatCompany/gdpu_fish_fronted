@@ -12,9 +12,9 @@
 		
 		
 		<view class="user-info info" style="display: flex;">
-			<img class="user-avatar" src="../static/logo.png" alt="" />
-			<view class="user-name">
-				六朝收藏馆
+			<img class="user-avatar" :src="item.data.user_avatar" alt="" />
+			<view class="user-name" style="overflow:hidden; text-overflow: ellipsis;">
+				{{ item.data.username }}
 			</view>
 		</view>
 	</view>
@@ -25,6 +25,8 @@ import {defineProps} from 'vue'
 let item = defineProps({
 	data: Object
 })
+
+console.log(item.data.user_avatar)
 </script>
 
 <style lang="less" scoped>
@@ -45,7 +47,7 @@ let item = defineProps({
 	
 	.stuff-pic {
 		width: 326rpx;
-		height: 320rpx;
+		height: 370rpx;
 		border-radius: 25rpx;
 	}
 }

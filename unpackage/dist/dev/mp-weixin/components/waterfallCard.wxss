@@ -12,7 +12,8 @@
 }
 .layout .stuff-pic.data-v-4d2310b4 {
   width: 326rpx;
-  height: 320rpx;
+  height: 370rpx;
+  border-radius: 25rpx;
 }
 .stuff-info .stuff-name.data-v-4d2310b4 {
   left: 16px;

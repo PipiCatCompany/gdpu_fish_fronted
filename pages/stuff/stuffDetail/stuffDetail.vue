@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="layout">
-			<view class="header" style="display: flex;">
+			<view class="header" style="display: flex; margin-top: 40rpx;">
 				<view class="goback-header" @click="goback()">
 					<uni-icons type="arrow-left" size="30"></uni-icons>	
 				</view>
@@ -35,7 +35,7 @@
 				<view class="price">
 					USD 180.00
 				</view>
-				<view class="info" style="">
+				<view class="info">
 					通常情况下，第一种是用的最多的也是最常见的情况。浏览器缓存是最直接的一种缓存形式，浏览器会在用户的设备上（通常是硬盘或SSD）保存最近访问过的网页的部分或全部内容，包括HTML、CSS、JavaScript文件以及图片等资源。浏览器使用缓存可以显著提高加载速度，并减轻服务器的负担。
 					当浏览器需要确定是否使用缓存时，它会根据HTTP响应头中的缓存控制信息（如Cache-Control和Expires头）来决定缓存的有效期。如果缓存有效，浏览器将直接使用缓存的内容；如果缓存过期或者没有缓存，则会向服务器发送新的请求。这涉及到浏览器的强缓存与弱缓存的机制，我会单独出一篇文章详细给各位读者姥爷讲一讲。
 				</view>
@@ -76,6 +76,24 @@
 </template>
 
 <script setup>
+// import {onMounted,getCurrentInstance} from 'vue'	
+import {onLoad} from "@dcloudio/uni-app"
+
+onLoad((options) => {
+	let stuffInfo = JSON.parse(decodeURIComponent(options.stuff));
+	console.log(stuffInfo)
+}) 
+
+// onMounted((e) => {
+// 	// 直接用页面实例拿路由参数
+// 	console.log(e)
+// 	const instance = getCurrentInstance();
+// 	let stuffInfo = JSON.parse(decodeURIComponent(instance.attrs.stuff));
+// 	console.log('stuffInfo', stuffInfo);
+// })
+
+
+
 const goback = () => {
 	uni.navigateBack()
 }	

@@ -1,6 +1,5 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-const common_assets = require("../common/assets.js");
 const _sfc_main = {
   __name: "waterfallCard",
   props: {
@@ -8,12 +7,14 @@ const _sfc_main = {
   },
   setup(__props) {
     let item = __props;
+    console.log(item.data.user_avatar);
     return (_ctx, _cache) => {
       return {
         a: common_vendor.unref(item).data.img,
         b: common_vendor.t(common_vendor.unref(item).data.info),
         c: common_vendor.t(common_vendor.unref(item).data.price),
-        d: common_assets._imports_0
+        d: common_vendor.unref(item).data.user_avatar,
+        e: common_vendor.t(common_vendor.unref(item).data.username)
       };
     };
   }

@@ -18,7 +18,9 @@
 			"path" : "pages/stuff/stuff",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh": true, // 开启该页面下拉刷新，默认false
+				"onReachBottomDistance": 100 // onReachBottom事件触发时距页面底部距离，默认50，单位px
 			}
 		},
 		{
