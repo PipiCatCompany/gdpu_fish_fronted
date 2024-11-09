@@ -82,6 +82,7 @@ import {onLoad} from "@dcloudio/uni-app"
 onLoad((options) => {
 	let stuffInfo = JSON.parse(decodeURIComponent(options.stuff));
 	console.log(stuffInfo)
+	console.log("conflict")
 }) 
 
 // onMounted((e) => {
