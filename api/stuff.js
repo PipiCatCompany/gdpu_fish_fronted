@@ -8,3 +8,19 @@ export const GetStuffPagination = (pageNum,pageSize) => {
 	})
 }
 
+export const GetCommentList = (postId,token) => {
+	return request({
+		url: `/comments?postId=${postId}`,
+		method: 'get',
+		token: token
+	})
+}
+
+export const CreateComment = (data,token) => {
+	return request({
+		url: "/comment",
+		method: 'post',
+		data: data,
+		token: token
+	})
+}

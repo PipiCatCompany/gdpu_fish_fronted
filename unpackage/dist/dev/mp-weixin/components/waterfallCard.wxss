@@ -16,10 +16,6 @@
   border-radius: 25rpx;
 }
 .stuff-info .stuff-name.data-v-4d2310b4 {
-  left: 16px;
-  top: 176px;
-  width: 116px;
-  height: 30px;
   opacity: 1;
   /** 文本1 */
   font-size: 13px;

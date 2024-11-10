@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/stuff/stuff",
     "pages/about/about",
     "pages/message/message",
-    "pages/stuff/stuff",
     "pages/about/studentCode/studentCode",
     "pages/stuff/stuffDetail/stuffDetail"
   ],

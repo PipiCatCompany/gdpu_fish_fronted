@@ -11,7 +11,7 @@ const _sfc_main = {
     return (_ctx, _cache) => {
       return {
         a: common_vendor.unref(item).data.img,
-        b: common_vendor.t(common_vendor.unref(item).data.info),
+        b: common_vendor.t(common_vendor.unref(item).data.title),
         c: common_vendor.t(common_vendor.unref(item).data.price),
         d: common_vendor.unref(item).data.user_avatar,
         e: common_vendor.t(common_vendor.unref(item).data.username)

@@ -3,9 +3,9 @@ Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 const api_user = require("./api/user.js");
 if (!Math) {
+  "./pages/stuff/stuff.js";
   "./pages/about/about.js";
   "./pages/message/message.js";
-  "./pages/stuff/stuff.js";
   "./pages/about/studentCode/studentCode.js";
   "./pages/stuff/stuffDetail/stuffDetail.js";
 }

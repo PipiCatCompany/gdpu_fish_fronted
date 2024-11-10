@@ -25,11 +25,6 @@
 }
 .stuff-info-bar .info.data-v-7b66c6e5 {
   margin-top: 20rpx;
-  height: 300rpx;
-  overflow: hidden;
-  /* 隐藏溢出内容 */
-  text-overflow: ellipsis;
-  /* 使用省略号 */
 }
 .footer-bar.data-v-7b66c6e5 {
   position: fixed;
@@ -38,7 +33,7 @@
   right: 0;
   height: 40px;
   /* 可以根据需要调整高度 */
-  background-color: #eee;
+  background-color: white;
   /* 导航栏背景颜色 */
   color: white;
   /* 字体颜色 */

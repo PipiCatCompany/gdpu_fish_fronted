@@ -3,10 +3,10 @@
 		<image  class="stuff-pic" :src="item.data.img" alt="" />
 		<view class="stuff-info info">
 			<view class="stuff-name">
-				{{ item.data.info }}
+				{{ item.data.title }}
 			</view>
 			<view class="stuff-price">
-				{{ item.data.price }}
+				￥{{ item.data.price }}
 			</view>
 		</view>
 		
@@ -54,10 +54,6 @@ console.log(item.data.user_avatar)
 
 .stuff-info {
 	.stuff-name {
-		left: 16px;
-		top: 176px;
-		width: 116px;
-		height: 30px;
 		opacity: 1;
 		/** 文本1 */
 		font-size: 13px;
