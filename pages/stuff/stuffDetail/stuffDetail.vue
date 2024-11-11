@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="layout">
-			<view class="header" style="display: flex; margin-top: 40rpx;">
-				<view class="goback-header" @click="goback()">
+			<view class="header" style="display: flex; position: fixed; z-index: 999;">
+				<view class="goback-header" @click="goback()" style="background-color: white;">
 					<uni-icons type="arrow-left" size="30"></uni-icons>	
 				</view>
 				
@@ -78,6 +78,10 @@
 		<view class="footer-bar" style="display: flex;">
 			<uni-icons type="chat" size="30"  @click="open"></uni-icons>				
 			<uni-icons type="star" size="30"></uni-icons>	
+			<view @click="gotoMessageDetail" class="message-btn" style="display: inline-block; clear: both;">
+			    <uni-icons type="person" size="30"></uni-icons>
+			    <text style="font-size: 12px; color: red;">私聊一下</text>
+			</view>
 			
 
 			<uni-popup ref="popup" type="bottom" border-radius="10px 10px 0 0">
@@ -141,6 +145,12 @@ onLoad((options) => {
 const goback = () => {
 	uni.navigateBack()
 }	
+
+const gotoMessageDetail = () => {
+	uni.navigateTo({
+		url: "/pages/message/messageDetail/messageDetail"
+	})
+}
 
 const open = () =>{
 	// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
