@@ -78,7 +78,9 @@
 		<view class="footer-bar" style="display: flex;">
 			<uni-icons type="chat" size="30"  @click="open"></uni-icons>				
 			<uni-icons type="star" size="30"></uni-icons>	
-			<view @click="gotoMessageDetail" class="message-btn" style="display: inline-block; clear: both;">
+			
+			<view v-if="GlobalObj.stuff.SellerId != GlobalObj.user.UserId" 
+			@click="gotoMessageDetail" class="message-btn" style="display: inline-block; clear: both;">
 			    <uni-icons type="person" size="30"></uni-icons>
 			    <text style="font-size: 12px; color: red;">私聊一下</text>
 			</view>
@@ -116,6 +118,7 @@ let GlobalObj = reactive({
 	post_id: "",
 	token: "",
 	user: {},
+	stuff: {},
 })
 
 const popup = ref(null);
@@ -132,6 +135,7 @@ onLoad((options) => {
 	GlobalObj.post_id = data.post_id
 	GlobalObj.token = token 
 	GlobalObj.user = GetUser()
+	GlobalObj.stuff = data
 	
 	// 请求评论
 	GetCommentList(postId,token)
@@ -148,7 +152,7 @@ const goback = () => {
 
 const gotoMessageDetail = () => {
 	uni.navigateTo({
-		url: "/pages/message/messageDetail/messageDetail"
+		url: "/pages/message/messageDetail/messageDetail" + "?data=" + encodeURIComponent(JSON.stringify(GlobalObj))
 	})
 }
 

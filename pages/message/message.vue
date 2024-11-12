@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="padding-top: 100rpx;">
 		<uni-list-chat title="uni-app" avatar="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png" note="您收到一条新的消息" time="2020-02-02 20:20" badge-positon="left" badge-text="99"></uni-list-chat>
 	</view>
 </template>

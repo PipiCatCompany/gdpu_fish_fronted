@@ -16,6 +16,10 @@
 		<view class="student-code" @click="gotoStudentCode">
 			<button class="my-btn">学生认证 → </button>
 		</view>
+		
+		<view class="student-code" @click="gotoUploadStuff" style="margin-top: 54rpx;">
+			<button class="my-btn">发布商品 → </button>
+		</view>
 	</view>
 </template>
 
@@ -39,6 +43,12 @@ const gotoStudentCode = () => {
 	uni.navigateTo({
 		url: '/pages/about/studentCode/studentCode'
 	});
+}
+
+const gotoUploadStuff = () => {
+	uni.navigateTo({
+		url: '/pages/about/uploadStuff/uploadStuff'
+	})
 }
 </script>
 

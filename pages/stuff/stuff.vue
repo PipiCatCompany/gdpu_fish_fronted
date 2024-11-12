@@ -64,10 +64,8 @@ onMounted: {
 }
 
 const gotoDetail = (pair) => {
-	// console.log(JSON.stringify(pair))
-
 	uni.navigateTo({
-		url: "/pages/stuff/stuffDetail/stuffDetail" + "?stuff=" + 	encodeURIComponent(JSON.stringify(pair)),	
+		url: "/pages/stuff/stuffDetail/stuffDetail" + "?stuff=" + encodeURIComponent(JSON.stringify(pair)),	
 		animationType: 'slide-in-right',
 		animationDuration: 2000
 	});
@@ -77,7 +75,7 @@ const gotoDetail = (pair) => {
 <style lang="less" scoped>
 .header {
 	height: 240rpx;
-	padding-top: 98rpx;
+	padding-top: 148rpx;
 	padding-left: 85rpx;
 	background-color: aqua;
 	box-sizing: border-box;
