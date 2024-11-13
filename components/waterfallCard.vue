@@ -26,7 +26,6 @@ let item = defineProps({
 	data: Object
 })
 
-console.log(item.data.user_avatar)
 </script>
 
 <style lang="less" scoped>

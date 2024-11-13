@@ -42,52 +42,58 @@ let imageList = ref([])
 let imageTmp = ref()
 let QiNiuToken = ref("")
 
+
+function generateUniqueKey(filename) {
+    // 获取当前时间戳
+    const timestamp = Date.now(); // 以毫秒为单位的时间戳
+    // 生成一个 3 位随机数
+    const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    // 返回组合后的 key
+    return `${timestamp}${randomNum}${filename}`;
+}
+
+
 onLoad(() => {
 	let userToken = GetToken() || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJESmhZcHFBcEdrIiwiZXhwIjoxNzM5MTkxNjc5LCJuYmYiOjE3MzE0MTU2NzksImlhdCI6MTczMTQxNTY3OX0.i0OhZFmu6zCA0FNH8A-p7e2NA7Hz46WZup3nvPaAE1E"
-	GetQiNiuToken(userToken).then(res => { QiNiuToken.value = res.data})
+	GetQiNiuToken(userToken).then(res => { 
+		console.log(res.data)
+		QiNiuToken.value = res.data})
 })
 
 const UploadBtn = () => {
 	console.log(imageList.value)
-	
-	const options = {
-	  quality: 0.60,
-	  // maxWidth: 1000,
-	  // maxHeight: 618
-	}
-	
-	// console.log(qiniu)
-	qiniu.compressImage(imageList.value[0], options).then(data => {
-		const putExtra = {
-			fname: "qiniu.png",		// 需要哈希
-			mimeType: "image/png",
-		};
+	imageList.value.forEach((item)=> {
+		const filename = item.split("/")[3] || "unknownKey"
 		
-		const config = {
-			useCdnDomain: true,
-			region: qiniu.region.z2
-		}
-		
-		const key = undefined // 为 null 或者 undefined 时则自动使用文件的 hash 作为文件名
-		
-		const observable = qiniu.upload(data.dist, key, QiNiuToken.value, putExtra, config)
-	  
-	  
-		const observer = {
-			next(res) {
-				console.log('正在上传:', res);
-			},
-			error(err) {
-				console.error('上传出错:', err);
-			},
-			complete(res) {
-				console.log('上传完成:', res);
-				// 在这里执行上传完成后的回调
-			}
-		};
-		  
-		const subscription = observable.subscribe(observer) // 上传开始
+		uni.uploadFile({
+		       url: "https://up-z2.qiniup.com", // 你的七牛云上传地址
+		       filePath: item, //图片地址
+		       name: 'file',
+		       formData: {
+		           'token': QiNiuToken.value, // 你的上传凭证
+		           'key': generateUniqueKey(filename)  // 你的图片key
+		       },
+		       success: (upFileRes) => {
+		           if (upFileRes.statusCode === 200) {
+		               let resData = JSON.parse(upFileRes.data);
+					   // 默认解析的地址
+		               let imgUrl = "http://smu4inwe6.hn-bkt.clouddn.com/" + resData.key
+		                console.log(imgUrl)
+		          
+		           }
+		       },
+		       fail: (upFileRes) => {
+		           uni.showToast({
+		               title: "图片上传失败,请重新上传",
+		               duration: 2000,
+		               icon: "none",
+		           });
+		       }
+		   });
 	})
+	
+
+
 }
 
 const uploadFinish = (e) => {
@@ -108,24 +114,12 @@ const uploadFail = (e) =>{
 }
 
 const selectUpload = (e) => {
-	console.log('上传：', e)
-	console.log(e.tempFilePaths)
-	
-	// imageList.value.push(imageTmp.value)
-	// uni.uploadFile({
-	// 	url: 'url', //仅为示例，非真实的接口地址
-	// 	filePath: e.tempFilePaths[0],
-	// 	name: 'file',
-	// 	// formData: {
-	// 	// 	'file': ''
-	// 	// },
-	// 	success: (uploadFileRes) => {
-	// 		console.log(uploadFileRes.data);
-	// 	},
-	// 	fail: (err) => {
-	// 		console.log(err);
-	// 	}
-	// })
+	console.log('上传(暂存)：', e)
+	// e.tempFilePaths 是多个，一次可以传多张图片
+	e.tempFilePaths.forEach((tmp) => {
+		imageList.value.push(tmp)
+	})
+
 }
 </script>
 
