@@ -24,3 +24,12 @@ export const CreateComment = (data,token) => {
 		token: token
 	})
 }
+
+export const CreatePost= (data,token) => {
+	return request({
+		url: "/post",
+		method: 'post',
+		data: data,
+		token: token
+	})
+}
