@@ -10,9 +10,9 @@
 		@query="queryList" @keyboardHeightChange="keyboardHeightChange" @hidedKeyboard="hidedKeyboard">
 			<!-- 顶部提示文字 -->
 			<!-- #ifdef H5 || MP-BAIDU || MP-TOUTIAO -->
-			<template #top>
+<!-- 			<template #top>
 				<view class="header">由于在H5、百度小程序、抖音小程序、飞书小程序中无法监听键盘高度变化，底部输入框切换时可能会有些bug，请运行在其他平台体验最佳效果</view>
-			</template>
+			</template> -->
 			<!-- #endif -->
 			
 			<!-- for循环渲染聊天记录列表 -->
@@ -37,8 +37,7 @@
 <script setup>
 import {onLoad,onReady,onPullDownRefresh} from "@dcloudio/uni-app"	
 import { GetMessageByPagination,GetMessageChanelInfo } from '@/api/message.js'
-import { GetUser } from '@/api/user.js'
-import { ref,reactive } from 'vue';
+import { ref } from 'vue';
 
 
 const paging = ref(null);
@@ -47,18 +46,13 @@ const inputBar = ref(null);
 const dataList = ref([]);
 const chartRoomId = "33-DPpeAHgUF7-DJhYpqApGk"
 const UserInfo = ref({})
-let MyUserId = ""
-const params = reactive({
-	pageNo: 1,
-	pageSize: 10
-})
-
+const MyUserId = "DPpeAHgUF7"
 onLoad((routeData) => {	
 	GetMessageChanelInfo("",chartRoomId).then(res => {
 		UserInfo.value = res.data.user_info;
 		// console.log(UserInfo.value["DJhYpqApGk"])
 	})
-	MyUserId = GetUser().UserId
+	
 })
 
 
@@ -67,12 +61,16 @@ const queryList = (pageNo, pageSize) => {
 	// 组件加载时会自动触发此方法，因此默认页面加载时会自动触发，无需手动调用
 	// 这里的pageNo和pageSize会自动计算好，直接传给服务器即可
 	// 模拟请求服务器获取分页数据，请替换成自己的网络请求
-
+	const params = {
+		pageNo: 0,
+		pageSize: 10
+	}
 	
+	console.log(params)
 	GetMessageByPagination("",params.pageSize,params.pageNo,chartRoomId).then(res => {
-		// 构造
-		// console.log(UserInfo.value) 
-		let modifiedData = []
+		 // 构造
+		// console.log(UserInfo.value)
+		const modifiedData = []
 		res.data.forEach((item) => {
 			let icon = UserInfo.value[item.msg_sender].avatar 
 			let name = UserInfo.value[item.msg_sender].username 
@@ -88,8 +86,6 @@ const queryList = (pageNo, pageSize) => {
 		console.log(modifiedData)
 		// 将请求的结果数组传递给z-paging
 		paging.value.complete(modifiedData);
-		params.pageNo = params.pageNo + 1
-		modifiedData = []
 		
 	}).catch(res => {
 		// 如果请求失败写paging.value.complete(false);

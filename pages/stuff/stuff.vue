@@ -6,17 +6,19 @@
 			</view>
 		</view>
 		
+
 		<view v-for="pair in stuffList" class="waterfall" style="display: flex;">
 			
 			<!-- uniapp小程序编译，组件点击事件不会触发 -->
 			<view class="" @click="gotoDetail(pair[0])">
 				<waterfallCard :data="pair[0]"></waterfallCard>
 			</view>
-
 			<view class="" @click="gotoDetail(pair[1])">
 				<waterfallCard v-if="pair[1]" :data="pair[1]"></waterfallCard>
 			</view>
 		</view> 
+
+		
 	</view>
 </template>
 
