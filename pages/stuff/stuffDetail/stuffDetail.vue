@@ -14,17 +14,11 @@
 						</view>
 					</view>
 				</view>
-			</view>
-					
+			</view>				
+			
 			<swiper style="width: 100%; margin-top: 100rpx; height: 550rpx;" :indicator-dots="true">
-				<swiper-item>
-					<image style="width: 100%"  :src="stuffInfo.img" mode="aspectFit"></image>
-				</swiper-item>
-				<swiper-item>
-					<image class="width: 100%" src="../../../static/tabber/chat_cur.png" mode="aspectFit"></image>
-				</swiper-item>
-				<swiper-item>
-					<image class="width: 100%" src="../../../static/tabber/about_cur.png" mode="aspectFill"></image>
+				<swiper-item v-for="item in stuffInfo.img">
+					<image style="width: 100%"  :src="item" mode="aspectFit"></image>
 				</swiper-item>
 			</swiper>
 			

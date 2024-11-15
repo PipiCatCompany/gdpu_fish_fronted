@@ -40,6 +40,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { updateUserStudentCode , GetUser , GetToken} from '@/api/user.js'
+
 let pkg = reactive({
 	code: "", 
 	codeConfirm: "",

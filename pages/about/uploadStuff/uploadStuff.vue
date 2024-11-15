@@ -7,41 +7,66 @@
 		<view class="input-bar" style="margin-top: 45rpx;">
 				<view style="display: flex;">
 					<view class="input-title-name">
-						上传商品
+						发布！
 					</view>
 				</view>
-				
-				<uni-section title="上传对应图片(可为空)" type="line">
-					<view class="example-body">
-						<uni-file-picker v-model="imageTmp" 
-						@select='selectUpload'
-						:auto-upload='false' 
-						@success='uploadSuccess'
-						@fail='uploadFail' 
-						file-mediatype="image" limit="3" title="最多选择3张图片">
-						</uni-file-picker>
-					</view>
+				<uni-section title="输入标题" type="line">
+					<uni-easyinput v-model="PostObj.title" class="form-input" placeholder=""/>
 				</uni-section>
+				
+				<uni-section title="详细说明" type="line">
+					<uni-easyinput  v-model="PostObj.info" type="textarea"  :autoHeight="true" class="form-input" placeholder="如果是闲置物品,可以带上磨损度,自提点等补充信息..."/>
+				</uni-section>
+				
+				<view class="uni-px-5 uni-pb-5" style="margin-top: 40rpx;">
+					<uni-data-checkbox v-model="PostObj.postType" :localdata="PostObj.postTypeLocal"></uni-data-checkbox>
+				</view>
+				
+				<view style="display: flex; margin-top: 40rpx;">
+					<view style="font-weight: 500; margin: auto;">价格： </view>
+					<uni-easyinput v-model="PostObj.price"  class="form-input" placeholder="最多精确到小数点后两位"/>
+				</view>
+
+				<view class="example-body" style="margin-top: 40rpx;">
+					<uni-file-picker v-model="imageTmp" 
+					@select='selectUpload'
+					@delete="deleteUpload"
+					:auto-upload='false' 
+					@success='uploadSuccess'
+					@fail='uploadFail' 
+					file-mediatype="image" limit="3" title="最多选择3张图片(可为空)">
+					</uni-file-picker>
+				</view>
 		</view>
 		
-		
-		<button class="student-code-btn" @click="UploadBtn">确认绑定</button>
+		<button class="student-code-btn" @click="UploadBtn">发布商品</button>
 	</view>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import {onLoad} from "@dcloudio/uni-app"
 import { GetQiNiuToken } from '@/api/qiniu.js'
-import { GetToken } from '@/api/user.js';
+import { GetToken,GetUser } from '@/api/user.js';
+import { ToastWrapper } from '@/utils.js'
+import { CreatePost } from '@/api/stuff.js'
 
-import * as qiniu from 'qiniu-js'
 
 
 let imageList = ref([])
 let imageTmp = ref()
 let QiNiuToken = ref("")
 
+let PostObj = reactive({
+	userToken: "",
+	userId: "",
+	postType: "",
+	postTypeLocal: [{text: '二手闲置',value:0},{text: '兼职',value:1}],
+	title: "",
+	info: "",
+	price: "",
+	img: "",
+})
 
 function generateUniqueKey(filename) {
     // 获取当前时间戳
@@ -54,45 +79,102 @@ function generateUniqueKey(filename) {
 
 
 onLoad(() => {
-	let userToken = GetToken() || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJESmhZcHFBcEdrIiwiZXhwIjoxNzM5MTkxNjc5LCJuYmYiOjE3MzE0MTU2NzksImlhdCI6MTczMTQxNTY3OX0.i0OhZFmu6zCA0FNH8A-p7e2NA7Hz46WZup3nvPaAE1E"
+	let userToken = GetToken()
+	PostObj.userToken = userToken 
+	PostObj.userId = GetUser().UserId
 	GetQiNiuToken(userToken).then(res => { 
 		console.log(res.data)
 		QiNiuToken.value = res.data})
 })
 
+function isValidPrice(price) {
+    // 使用正则表达式检查价格格式
+    const regex = /^\d+(\.\d{1,2})?$/;
+    return regex.test(price);
+}
+
 const UploadBtn = () => {
 	console.log(imageList.value)
-	imageList.value.forEach((item)=> {
-		const filename = item.split("/")[3] || "unknownKey"
-		
-		uni.uploadFile({
-		       url: "https://up-z2.qiniup.com", // 你的七牛云上传地址
-		       filePath: item, //图片地址
-		       name: 'file',
-		       formData: {
-		           'token': QiNiuToken.value, // 你的上传凭证
-		           'key': generateUniqueKey(filename)  // 你的图片key
-		       },
-		       success: (upFileRes) => {
-		           if (upFileRes.statusCode === 200) {
-		               let resData = JSON.parse(upFileRes.data);
-					   // 默认解析的地址
-		               let imgUrl = "http://smu4inwe6.hn-bkt.clouddn.com/" + resData.key
-		                console.log(imgUrl)
-		          
-		           }
-		       },
-		       fail: (upFileRes) => {
-		           uni.showToast({
-		               title: "图片上传失败,请重新上传",
-		               duration: 2000,
-		               icon: "none",
-		           });
-		       }
-		   });
-	})
+	console.log(PostObj)
 	
-
+	// 校验价格
+	if(isValidPrice(PostObj.price) === false) { 
+		ToastWrapper("价格不合法","error")
+	}
+	
+	if(PostObj.postType === "") {
+		ToastWrapper("请选择发布类型","error")
+	}
+	
+	// return 
+	
+	
+	const uploadPromises = imageList.value.map((item) => {
+	    return new Promise((resolve, reject) => {
+	        const filename = item.split("/")[3] || "unknownKey";
+	        
+	        uni.uploadFile({
+	            url: "https://up-z2.qiniup.com", // 你的七牛云上传地址
+	            filePath: item, // 图片地址
+	            name: 'file',
+	            formData: {
+	                'token': QiNiuToken.value, // 你的上传凭证
+	                'key': generateUniqueKey(filename)  // 你的图片key
+	            },
+	            success: (upFileRes) => {
+	                if (upFileRes.statusCode === 200) {
+	                    let resData = JSON.parse(upFileRes.data);
+	                    // 默认解析的地址
+	                    let imgUrl = "http://smu4inwe6.hn-bkt.clouddn.com/" + resData.key;
+	                    console.log(imgUrl);
+	                    
+	                    PostObj.img += imgUrl + ";";
+	                    resolve(); // 上传成功，解决Promise
+	                } else {
+	                    reject("上传失败"); // 上传失败，拒绝Promise
+	                }
+	            },
+	            fail: (upFileRes) => {
+	                uni.showToast({
+	                    title: "图片上传失败,请重新上传",
+	                    duration: 2000,
+	                    icon: "none",
+	                });
+	                reject("上传失败"); // 拒绝Promise
+	            }
+	        });
+	    });
+	});
+	
+	
+	// 等待所有的上传完成
+	Promise.all(uploadPromises)
+	    .then(() => {
+			// 把屁股的；弃掉
+	        let n = PostObj.img.length
+	        if(n > 0) {
+	        	PostObj.img = PostObj.img.slice(0,n-1)
+	        	console.log(PostObj.img)
+	        }
+			
+			
+			// 上传图片到OSS完毕
+	        return CreatePost(
+	            { 
+	                "category": PostObj.postTypeLocal[PostObj.postType].text,
+	                "img": PostObj.img,
+	                "info": PostObj.info,
+	                "price": parseFloat(PostObj.price),
+	                "title": PostObj.title,
+	                "userId": PostObj.userId
+	            }, PostObj.userToken
+	        );
+	    })
+	    .then(res => {
+			ToastWrapper("创建成功!","success")
+			// goback()
+		})
+	    .catch(err => console.error(err));
 
 }
 
@@ -121,6 +203,14 @@ const selectUpload = (e) => {
 	})
 
 }
+
+const deleteUpload = (e) => {
+	console.log('删除(暂存)：', e)
+	let index = e.index 
+	// console.log("index: "+ index) 
+	
+	imageList.value.splice(index,1)
+}
 </script>
 
 <style lang="less" scoped>
@@ -134,7 +224,13 @@ const selectUpload = (e) => {
 }
 
 .student-code-btn {
-	margin-top: 764rpx;
+	// margin-top: 564rpx;
+	position: absolute;
+    bottom: 54rpx;
+    left: 54rpx
+	;right: 54rpx;
+    margin: 0;
+	
 	background: linear-gradient(90deg, rgba(92, 116, 255, 1), rgba(45, 230, 175, 1));
 	color: white; /* 设置文字颜色为白色 */
 	border: none; /* 去掉边框 */

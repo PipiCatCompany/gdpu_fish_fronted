@@ -1,6 +1,6 @@
 <template>
 	<view class="layout">
-		<image  class="stuff-pic" :src="item.data.img" alt="" />
+		<image  class="stuff-pic" :src="item.data.img[0]" alt="" />
 		<view class="stuff-info info">
 			<view class="stuff-name">
 				{{ item.data.title }}
