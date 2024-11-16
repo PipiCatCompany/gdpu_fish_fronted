@@ -116,10 +116,13 @@ const doSend = (msg) => {
 	})
 	setTimeout(()=>{
 		uni.hideLoading();
+		console.log(UserInfo.value)
+		// let icon = UserInfo.value[MyUserId].avatar
+		// let name = UserInfo.value[MyUserId].username 
 		paging.value.addChatRecordData({
-			time: '',
-			icon: '/static/daxiong.jpg',
-			name: '大雄',
+			time: Date.now(),
+			icon: icon,
+			name: name,
 			content: msg,
 			isMe: true
 		});

@@ -41,3 +41,11 @@ export const updateUserStudentCode = (data,token) => {
 		token: token
 	})
 }
+
+export const Logout = (userId,token) => {
+	return request({
+		url: `/user/logout?userId=${userId}`,
+		method: 'get',
+		token: token
+	})
+}

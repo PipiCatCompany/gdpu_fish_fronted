@@ -100,14 +100,14 @@ const UploadBtn = () => {
 	// 校验价格
 	if(isValidPrice(PostObj.price) === false) { 
 		ToastWrapper("价格不合法","error")
+		return 
 	}
 	
 	if(PostObj.postType === "") {
 		ToastWrapper("请选择发布类型","error")
+		return 
 	}
-	
-	// return 
-	
+
 	
 	const uploadPromises = imageList.value.map((item) => {
 	    return new Promise((resolve, reject) => {
@@ -135,6 +135,7 @@ const UploadBtn = () => {
 	                }
 	            },
 	            fail: (upFileRes) => {
+					console.log(upFileRes)
 	                uni.showToast({
 	                    title: "图片上传失败,请重新上传",
 	                    duration: 2000,

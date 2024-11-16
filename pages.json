@@ -1,19 +1,19 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path" : "pages/message/messageDetail/messageDetail",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"uni.startPullDownRefresh":true
-			}
-		},
-		{
 			"path" : "pages/stuff/stuff",
 			"style" : 
 			{
 				"navigationBarTitleText" : "",
 				"onReachBottomDistance": 100 // onReachBottom事件触发时距页面底部距离，默认50，单位px
+			}
+		},
+		{
+			"path" : "pages/message/messageDetail/messageDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"uni.startPullDownRefresh":true
 			}
 		},
 		{
