@@ -2,6 +2,7 @@
 <!-- nvue的聊天记录模式中需要写@cellStyleChange="cellStyleChange"，如果需要兼容nvue和vue，请以nvue中写法为准，会自动兼容vue -->
 <!-- 注意，此写法由于将列表倒置了，在iOS15以下和部分较低版本安卓中可能出现列表无法滚动的问题，此时建议使用z-paging 2.7.0以下的版本及写法 -->
 <template>
+	<goback/>
 	<view class="content">
 		<!-- use-chat-record-mode：开启聊天记录模式 -->
 		<!-- safe-area-inset-bottom：开启底部安全区域适配 -->
@@ -11,7 +12,7 @@
 			<!-- 顶部提示文字 -->
 			<!-- #ifdef H5 || MP-BAIDU || MP-TOUTIAO -->
 			<template #top>
-				<view class="header">由于在H5、百度小程序、抖音小程序、飞书小程序中无法监听键盘高度变化，底部输入框切换时可能会有些bug，请运行在其他平台体验最佳效果</view>
+				<!-- <view class="header">由于在H5、百度小程序、抖音小程序、飞书小程序中无法监听键盘高度变化，底部输入框切换时可能会有些bug，请运行在其他平台体验最佳效果</view> -->
 			</template>
 			<!-- #endif -->
 			
@@ -39,6 +40,7 @@ import {onLoad,onReady,onPullDownRefresh} from "@dcloudio/uni-app"
 import { GetMessageByPagination,GetMessageChanelInfo } from '@/api/message.js'
 import { GetUser } from '@/api/user.js'
 import { ref,reactive } from 'vue';
+import goback from '@/components/goback.vue'
 
 
 const paging = ref(null);

@@ -1,5 +1,5 @@
 // 全局请求封装
-const base_url = 'http://192.168.1.102:8000/v1'
+const base_url = 'http://192.168.1.104:8000/v1'
 // 请求超出时间
 const timeout = 5000
  

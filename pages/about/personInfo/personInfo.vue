@@ -1,17 +1,15 @@
 <template>
-	<view class="">
-		<goback/>
-		
-		<view class="ss">
-			111
-		</view>
+	<goback/>
+	<view> 
+	
 	</view>
 </template>
 
 <script setup>
 import goback from '@/components/goback.vue'
+
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 </style>

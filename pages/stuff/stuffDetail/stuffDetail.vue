@@ -1,11 +1,8 @@
 <template>
+	<goback/>
 	<view>
 		<view class="layout">
 			<view class="header" style="display: flex; position: fixed; z-index: 999;">
-				<view class="goback-header" @click="goback()" style="background-color: white;">
-					<uni-icons type="arrow-left" size="30"></uni-icons>	
-				</view>
-				
 				<view class="seller-info" style="margin-left: 300rpx;">
 					<view  style="display: flex;">
 						<img style="height: 64rpx; width: 64rpx; margin-right: 10rpx; border-radius: 50%;"  :src="stuffInfo.user_avatar"></img>
@@ -16,7 +13,7 @@
 				</view>
 			</view>				
 			
-			<swiper style="width: 100%; margin-top: 100rpx; height: 550rpx;" :indicator-dots="true">
+			<swiper style="width: 100%; margin-top: 100rpx; height: 550rpx;" :indicator-dots="true" :touchable="true">
 				<swiper-item v-for="item in stuffInfo.img">
 					<image style="width: 100%"  :src="item" mode="aspectFit"></image>
 				</swiper-item>
@@ -102,6 +99,8 @@ import {ref,reactive} from 'vue'
 import {onLoad,onInit} from "@dcloudio/uni-app"
 import { GetCommentList,CreateComment } from '@/api/stuff.js'
 import { GetToken,GetUser } from '@/api/user'
+import goback from '@/components/goback.vue'
+
 
 let stuffInfo = ref()
 let comments = ref()
@@ -137,12 +136,7 @@ onLoad((options) => {
 			comments.value = res.data 
 			commentLen.value = res.data.length
 		})
-}) 
-
-
-const goback = () => {
-	uni.navigateBack()
-}	
+}) 	
 
 const gotoMessageDetail = () => {
 	uni.navigateTo({

@@ -1,9 +1,6 @@
 <template>
+	<goback/>
 	<view class="layout">
-		<view class="goback-header" @click="goback()">
-			<uni-icons type="arrow-left" size="30"></uni-icons>	
-		</view>
-		
 		<view class="input-bar" style="margin-top: 45rpx;">
 				<view style="display: flex;">
 					<view class="input-title-name">
@@ -40,6 +37,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { updateUserStudentCode , GetUser , GetToken} from '@/api/user.js'
+import goback from '@/components/goback.vue'
 
 let pkg = reactive({
 	code: "", 
@@ -80,9 +78,6 @@ const updateStudentCode = () => {
 	})
 }
 
-const goback = () => {
-	uni.navigateBack()
-}
 </script>
 
 <style lang="less" scoped>

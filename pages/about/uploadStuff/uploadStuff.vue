@@ -1,9 +1,6 @@
 <template>
+	<goback/>
 	<view class="layout">
-		<view class="goback-header" @click="goback()">
-			<uni-icons type="arrow-left" size="30"></uni-icons>	
-		</view>
-		
 		<view class="input-bar" style="margin-top: 45rpx;">
 				<view style="display: flex;">
 					<view class="input-title-name">
@@ -48,8 +45,9 @@ import { reactive, ref } from 'vue';
 import {onLoad} from "@dcloudio/uni-app"
 import { GetQiNiuToken } from '@/api/qiniu.js'
 import { GetToken,GetUser } from '@/api/user.js';
-import { ToastWrapper } from '@/utils.js'
+import { ToastWrapper } from '@/api/utils.js'
 import { CreatePost } from '@/api/stuff.js'
+import goback from '@/components/goback.vue'
 
 
 
@@ -181,10 +179,6 @@ const UploadBtn = () => {
 
 const uploadFinish = (e) => {
 	console.log(e)
-}
-
-const goback = () => {
-	uni.navigateBack()
 }
 
 const uploadSuccess = (e) =>{

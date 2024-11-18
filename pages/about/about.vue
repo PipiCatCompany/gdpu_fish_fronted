@@ -1,4 +1,5 @@
 <template>
+	<view style="margin-top: 80rpx;"></view>
 	<view class="layout">
 		<view class="user-profile">
 			<img class="avatar" src="../../static/logo.png" alt="" />
@@ -13,14 +14,39 @@
 			</view>
 		</view>
 		
+<!-- 		
 		<view class="student-code" @click="gotoStudentCode">
 			<button class="my-btn">学生认证 → </button>
 		</view>
 		
 		<view class="student-code" @click="gotoUploadStuff" style="margin-top: 54rpx;">
 			<button class="my-btn">发布商品 → </button>
-		</view>
+		</view> -->
 	</view>
+	
+	<uni-section title="我的" type="line" padding>
+		<uni-grid :show-border="false" :square="false" :column="4" :highlight="true" @change="change">
+			<uni-grid-item  v-for="(item, index) in MyList" :index="index" :key="index">
+				<view class="grid-item-box" style="background-color: #fff;">
+					<uni-icons :type="item.icon" :size="30" color="#777" />
+					<text class="text">{{ item.title }}</text>
+				</view>
+			</uni-grid-item>
+		</uni-grid>
+	</uni-section>
+	
+	
+	<uni-section title="服务中心" type="line" padding>
+		<uni-grid :show-border="false" :square="false" :column="4" :highlight="true" @change="changeService">
+			<uni-grid-item  v-for="(item, index) in ServiceList" :index="index" :key="index">
+				<view class="grid-item-box" style="background-color: #fff;">
+					<uni-icons :type="item.icon" :size="30" color="#777" />
+					<text class="text">{{ item.title }}</text>
+				</view>
+			</uni-grid-item>
+		</uni-grid>
+	</uni-section>
+
 </template>
 
 <script setup>
@@ -32,22 +58,61 @@ let user = reactive({
 	isStudentCode: false 
 })
 
+const MyList = reactive([
+	{
+		title: "我的发布",
+		icon: "cloud-upload",
+		url: "/pages/about/studentCode/studentCode"
+	},
+	{
+		title: "我的收藏",
+		icon: "star",
+		url: "/pages/about/studentCode/studentCode"
+	},
+	{
+		title: "Bug反馈",
+		icon: "paperplane",
+		url: "/pages/about/studentCode/studentCode"
+	},
+])
+const ServiceList = reactive([
+	{
+		title: "个人信息",
+		icon: "person",
+		url: "/pages/about/personInfo/personInfo"
+	},
+	{
+		title: "学生认证",
+		icon: "auth",
+		url: "/pages/about/studentCode/studentCode"
+	},
+	{
+		title: "发布商品",
+		icon: "plusempty",
+		url: "/pages/about/uploadStuff/uploadStuff"
+	},
+	{
+		title: "关于",
+		icon: "info",
+		url: "/pages/about/projectInfo/projectInfo"
+	},
+])
+
 onMounted: {	
 	let user_storage = GetUser()
 	user.nickname = user_storage.Nickname
 	console.log(user)
 }
 
-const gotoStudentCode = () => {
-	// 去绑定学号	
+const changeService = (e) => {
+	console.log(e)
+	let i = e.detail.index 
+	let target = ServiceList[i].url 
+	
+	console.log(target)
+	
 	uni.navigateTo({
-		url: '/pages/about/studentCode/studentCode'
-	});
-}
-
-const gotoUploadStuff = () => {
-	uni.navigateTo({
-		url: '/pages/about/uploadStuff/uploadStuff'
+		url: target
 	})
 }
 </script>
@@ -77,4 +142,63 @@ const gotoUploadStuff = () => {
 		font-size: 25rpx;
 	}
 }
+
+.image {
+	width: 25px;
+	height: 25px;
+}
+.text {
+	font-size: 14px;
+	margin-top: 5px;
+}
+.example-body {
+	/* #ifndef APP-NVUE */
+	// display: block;
+	/* #endif */
+}
+.grid-dynamic-box {
+	margin-bottom: 15px;
+}
+.grid-item-box {
+	flex: 1;
+	// position: relative;
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 0;
+}
+.grid-item-box-row {
+	flex: 1;
+	// position: relative;
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 0;
+}
+.grid-dot {
+	position: absolute;
+	top: 5px;
+	right: 15px;
+}
+.swiper {
+	height: 420px;
+}
+/* #ifdef H5 */
+@media screen and (min-width: 768px) and (max-width: 1425px) {
+	.swiper {
+		height: 630px;
+	}
+}
+@media screen and (min-width: 1425px) {
+	.swiper {
+		height: 830px;
+	}
+}
+/* #endif */
 </style>
