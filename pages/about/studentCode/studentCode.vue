@@ -1,5 +1,6 @@
 <template>
-	<goback/>
+	<goback title="学生认证"/>
+	
 	<view class="layout">
 		<view class="input-bar" style="margin-top: 45rpx;">
 				<view style="display: flex;">

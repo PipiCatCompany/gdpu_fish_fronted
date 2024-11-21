@@ -13,15 +13,6 @@
 				</view>
 			</view>
 		</view>
-		
-<!-- 		
-		<view class="student-code" @click="gotoStudentCode">
-			<button class="my-btn">学生认证 → </button>
-		</view>
-		
-		<view class="student-code" @click="gotoUploadStuff" style="margin-top: 54rpx;">
-			<button class="my-btn">发布商品 → </button>
-		</view> -->
 	</view>
 	
 	<uni-section title="我的" type="line" padding>
@@ -124,7 +115,7 @@ const changeService = (e) => {
 
 .user-profile {
 	display: flex;
-	padding: 50rpx;
+	padding: 10rpx;
 	.avatar {  width: 140rpx ; height: 140rpx; border-radius: 50%;}
 	.user-detail { margin: 30rpx;}
 }
